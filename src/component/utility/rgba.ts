@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import themeDefault from './theme';
 import { CSSResult } from 'lit-element';
  
@@ -28,13 +27,17 @@ import { CSSResult } from 'lit-element';
     } | null
  }
 
+ interface Irgba {
+     (hex:any, alpha:any):string|undefined
+ }
+
  interface Icolor {
     r:number,
     g:number,
     b:number
  }
 
- const hexToRgb:Irgb = (hex:Ihex) => {
+ const hexToRgb:Irgb = (hex) => {
     const color:any = typeof hex === 'function' ? hex(props) : hex;
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     const result:RegExpExecArray|null = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
@@ -47,7 +50,7 @@ import { CSSResult } from 'lit-element';
     } : null;
  }
 
-const rgba = (hex:any, alpha:any)=> {
+const rgba:Irgba = (hex, alpha) => {
     const color:Icolor|null = hexToRgb(hex);
     const opacity:string = typeof alpha === 'function' ? alpha(props) : alpha;
     if(color) {

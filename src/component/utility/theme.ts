@@ -101,7 +101,7 @@ const theme:Ttype = {
 }
 
 interface IswitchProp{
-    [key:string]: string
+    [key:string]: CSSResult|string
 }
 
 export const palette = (name:string, index:number):CSSResult => {
@@ -124,7 +124,7 @@ export const withProp = (key:any, func:Function):CSSResult => {
     return (_.isArray(key) ? unsafeCSS(func(...key)) : unsafeCSS(func(key)));
 }
 
-export const ifProp = (bool:boolean, a:CSSResult, b:CSSResult):CSSResult|void => {
+export const ifProp = (bool:boolean, a:CSSResult, b?:CSSResult):CSSResult|void => {
     if(bool) {
         return a;
     }
