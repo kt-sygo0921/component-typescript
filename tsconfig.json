@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+      "experimentalDecorators": true,
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,5 +22,8 @@
   },
   "include": [
     "src"
+  ],
+  "typeRoots": [
+    "src/component/@types"
   ]
 }
