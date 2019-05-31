@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {LitElement, customElement, html, css, property} from 'lit-element';
-import { unsafeCSS } from 'lit-element/lib/css-tag';
+import {LitElement, customElement, html, css, property, TemplateResult} from 'lit-element';
+import {unsafeCSS} from 'lit-element/lib/css-tag';
 
 import {size, palette} from '../../utility/theme';
 import convertToAbsolutePath from '../../utility/convert-absolute-path';
@@ -15,65 +15,76 @@ import '../../Atoms/Image';
 import '../../Molecules/TextAnchorList';
 
 @customElement('sidebar-element')
-export class SidebarCustomElement extends LitElement {
+export default class SidebarCustomElement extends LitElement {
     // デコレータで指定した場合は初期値も指定されるため一時的に値を入れていない
-    @property({type:Object}) profile={}
+    @property({type: Object})
+    public profile = {};
 
-    @property({type: Object}) guest={
+    @property({type: Object})
+    public guest = {
         loginText: '',
-        signupText: ''
-    }
-    
-    @property({type:Array}) banners = [
+        signupText: '',
+    };
+
+    @property({type: Array})
+    public banners = [
         {
-            to:'',
-            thumbPath:'',
+            to: '',
+            thumbPath: '',
             alt: '',
-            target: ''
-        }
-    ]
-    @property({type:Array}) myListItems = [
+            target: '',
+        },
+    ];
+
+    @property({type: Array})
+    public myListItems = [
         {
-            to:'',
-            children:'',
-            target:'',
-            message: 0
-        }
-    ]
-    @property({type:Object}) pointInfo = {
-        title:'',
-        text:'',
+            to: '',
+            children: '',
+            target: '',
+            message: 0,
+        },
+    ];
+
+    @property({type: Object})
+    public pointInfo = {
+        title: '',
+        text: '',
         points: '',
-        buttonText: ''
-    }
-    @property({type:Object}) gameTopics = {
-        title:'',
-        items:[
-            {
-                title:'',
-                sub:'',
-                thumbPath:'',
-                to:'',
-                target:''
-            }
-        ]
-    }
-    @property({type:Object}) adminTopics = {
+        buttonText: '',
+    };
+
+    @property({type: Object})
+    public gameTopics = {
         title: '',
         items: [
             {
-                to:'',
-                children:''
-            }
+                title: '',
+                sub: '',
+                thumbPath: '',
+                to: '',
+                target: '',
+            },
+        ],
+    };
+
+    @property({type: Object})
+    public adminTopics = {
+        title: '',
+        items: [
+            {
+                to: '',
+                children: '',
+            },
         ],
         showAll: {
-            children:'',
-            to:'',
-            target:''
-        }
-    }
+            children: '',
+            to: '',
+            target: '',
+        },
+    };
 
-    static styles = css`
+    public static styles = css`
         .sidebar-wrapper {
             width: 240px;
         }
@@ -106,7 +117,7 @@ export class SidebarCustomElement extends LitElement {
         }
         .banner-wrapper {
             margin-top: ${size('space_m')};
-                & + & {
+            & + & {
                 margin-top: ${size('space_s')};
             }
         }
@@ -122,13 +133,19 @@ export class SidebarCustomElement extends LitElement {
     //     this.banners = data.banners;
     // }
 
-    render() {
-        if(_.isEmpty(this.profile)) {
+    public render(): TemplateResult | undefined {
+        if (_.isEmpty(this.profile)) {
             return html`
-                <div class="sidebar-wrapper"> 
+                <div class="sidebar-wrapper">
                     <div class="texture">
                         <div class="texture-inner">
-                            <sidebar-button class="loginbutton" to="/login" rank="secondary" scale="medium" full=${true}>
+                            <sidebar-button
+                                class="loginbutton"
+                                to="/login"
+                                rank="secondary"
+                                scale="medium"
+                                full=${true}
+                            >
                                 ${this.guest.loginText}
                             </sidebar-button>
                             <sidebar-button to="/signup" rank="primary" scale="medium" full=${true}>
@@ -136,32 +153,40 @@ export class SidebarCustomElement extends LitElement {
                             </sidebar-button>
                         </div>
                     </div>
-                    ${!_.isEmpty(this.adminTopics) && (
+                    ${!_.isEmpty(this.adminTopics) &&
                         html`
                             <section class="section">
                                 <sidebar-caption element="h4">Adminstar Topic</sidebar-caption>
-                                <sidebar-text-anchor-list items=${JSON.stringify(this.adminTopics)}></sidebar-text-anchor-list>
+                                <sidebar-text-anchor-list
+                                    items=${JSON.stringify(this.adminTopics)}
+                                ></sidebar-text-anchor-list>
                                 <div class="wrapshowall">
                                     <sidebar-anchor to="/message">
-                                        <sidebar-text-icon leftIcoName="arrow" leftIcoRotate="right" scale="xs" color=${JSON.stringify({palette: 'grayscale', index: 0})}>
+                                        <sidebar-text-icon
+                                            leftIcoName="arrow"
+                                            leftIcoRotate="right"
+                                            scale="xs"
+                                            color=${JSON.stringify({palette: 'grayscale', index: 0})}
+                                        >
                                             Show All
                                         </sidebar-text-icon>
                                     </sidebar-anchor>
                                 </div>
                             </section>
-                        `
+                        `}
+                    ${_.map(
+                        this.banners,
+                        (val): TemplateResult =>
+                            html`
+                                <div class="banner-wrapper">
+                                    <sidebar-anchor to=${val.to}>
+                                        <sidebar-image path=${val.thumbPath} imgWidth=${240}></sidebar-image>
+                                    </sidebar-anchor>
+                                </div>
+                            `
                     )}
-                    ${_.map(this.banners, val => (
-                        html`
-                        <div class="banner-wrapper">
-                            <sidebar-anchor to=${val.to}>
-                                <sidebar-image path=${val.thumbPath} imgWidth=${240}></sidebar-image>
-                            </sidebar-anchor>
-                        </div>
-                        `
-                    ))}
                 </div>
-            `
+            `;
         }
     }
 }

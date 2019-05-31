@@ -1,7 +1,7 @@
-import { unsafeCSS, CSSResult } from 'lit-element/lib/css-tag';
+import {unsafeCSS, CSSResult} from 'lit-element/lib/css-tag';
 
 let base = '';
-export const initBasePath = (rootPath:string) => {
+export const initBasePath = (rootPath: string) => {
     base = rootPath;
 };
 
@@ -11,4 +11,4 @@ initBasePath(
         : 'http://localhost:3002'
 );
 
-export default (relativePath:string):CSSResult => unsafeCSS(`${base}${relativePath}`)
+export default (relativePath: string): CSSResult => unsafeCSS(`${base}${relativePath}`);

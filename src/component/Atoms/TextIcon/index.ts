@@ -1,27 +1,34 @@
-import {LitElement, customElement, html, css, property} from 'lit-element';
+import {LitElement, customElement, html, css, property, TemplateResult} from 'lit-element';
 import {size} from '../../utility/theme';
 
 interface IiconScales {
-    [size:string]:string
+    [size: string]: string;
 }
 
-const iconScales:IiconScales = {
+const iconScales: IiconScales = {
     base: 'small',
     xs: 'small',
     s: 'medium',
     m: 'medium',
     l: 'large',
-    xl: 'large'
+    xl: 'large',
 };
 
 @customElement('sidebar-text-icon')
-export class TextIconCustomElement extends LitElement {
-    @property({type:String}) linespace='base'
-    @property({type:String}) scale='s'
-    @property({type:Object}) color = {palette: 'grayscale', index:0}
-    @property({type: Boolean}) invert = false
+export default class TextIconCustomElement extends LitElement {
+    @property({type: String})
+    public linespace = 'base';
 
-    static styles = css`
+    @property({type: String})
+    public scale = 's';
+
+    @property({type: Object})
+    public color = {palette: 'grayscale', index: 0};
+
+    @property({type: Boolean})
+    public invert = false;
+
+    public static styles = css`
         .element {
             display: flex;
         }
@@ -33,11 +40,13 @@ export class TextIconCustomElement extends LitElement {
         text-decoration: none;
     `;
 
-    render(){
+    public render(): TemplateResult {
         return html`
             <div class="element">
                 <sidebar-icon class="styledIconLeft" icoName="arrow" scale=${iconScales[this.scale]}></sidebar-icon>
-                <sidebar-text linespace=${this.linespace} scale=${this.scale} color=${JSON.stringify(this.color)}><slot></slot></sidebar-text>
+                <sidebar-text linespace=${this.linespace} scale=${this.scale} color=${JSON.stringify(this.color)}
+                    ><slot></slot
+                ></sidebar-text>
             </div>
         `;
     }

@@ -1,23 +1,23 @@
-declare namespace JSX{
-    interface IntrinsicElements{
-        'test-element': {text?: String}
+declare namespace JSX {
+    interface IntrinsicElements {
+        'test-element': {text?: string};
     }
-    interface IntrinsicElements{
+    interface IntrinsicElements {
         'sidebar-element': {
-            guest?: String
-            adminTopics?: String
-            banners?:String
-        }
+            guest?: string;
+            adminTopics?: string;
+            banners?: string;
+        };
     }
 
-    interface IntrinsicElements{
+    interface IntrinsicElements {
         'sidebar-button': {
-            children:string
-            class?:string
-            to:string
-            rank:string
-            scale:string
-            full:true
-        }
+            children: string;
+            class?: string;
+            to: string;
+            rank: string;
+            scale: string;
+            full: true;
+        };
     }
 }

@@ -3,51 +3,50 @@ import {unsafeCSS, CSSResult} from 'lit-element/lib/css-tag';
 import _ from 'lodash';
 
 interface Ttype {
-    palette:{
-        [key:string]:string[]
-        main:string[]
-        base:string[]
-        accent:string[]
-        grayscale:string[]
-        opacity:string[]
-    },
-    fonts:{
-        [key:string]:string | number
-        family_ja:string
-        family_en:string
-        family_ch:string
+    palette: {
+        [key: string]: string[];
+        main: string[];
+        base: string[];
+        accent: string[];
+        grayscale: string[];
+        opacity: string[];
+    };
+    fonts: {
+        [key: string]: string | number;
+        family_ja: string;
+        family_en: string;
+        family_ch: string;
 
-        size_base:string
-        size_xs:string
-        size_s:string
-        size_m:string
-        size_l:string
-        size_xl:string
+        size_base: string;
+        size_xs: string;
+        size_s: string;
+        size_m: string;
+        size_l: string;
+        size_xl: string;
 
-        height_base:number
-        height_s:number
-        height_m:number
-        height_l:number
-    },
+        height_base: number;
+        height_s: number;
+        height_m: number;
+        height_l: number;
+    };
     sizes: {
-        [key:string]:string
-        space_nothing:string
-        space_xxxs:string
-        space_xxs:string
-        space_xs:string
-        space_s:string
-        space_m:string
-        space_l:string
-        space_xl:string
-        space_xxl:string
-        space_xxxl:string
-        space_xxxxl:string
-        minWidth:string
-    },
-
+        [key: string]: string;
+        space_nothing: string;
+        space_xxxs: string;
+        space_xxs: string;
+        space_xs: string;
+        space_s: string;
+        space_m: string;
+        space_l: string;
+        space_xl: string;
+        space_xxl: string;
+        space_xxxl: string;
+        space_xxxxl: string;
+        minWidth: string;
+    };
 }
 
-const theme:Ttype = {
+const theme: Ttype = {
     palette: {
         main: ['#000000'],
         base: ['#FFFFFF'],
@@ -70,19 +69,19 @@ const theme:Ttype = {
         family_ja: `'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif`,
         family_en: `Arial, Helvetica, sans-serif`,
         family_ch: `'LiHei Pro', 微軟正黑體, 'Microsoft JhengHei', Arial, Verdana, 'Trebuchet MS', sans-serif`,
-    
+
         size_base: '10px',
         size_xs: '11px',
         size_s: '13px',
         size_m: '16px',
         size_l: '24px',
         size_xl: '30px',
-    
+
         height_base: 1,
         height_s: 1.2,
         height_m: 1.4,
         height_l: 1.6,
-    }, 
+    },
     sizes: {
         space_nothing: '0px',
         space_xxxs: '2px',
@@ -97,38 +96,38 @@ const theme:Ttype = {
         space_xxxxl: '160px',
         // TODO:背景ジャックを加味していないサイズのため変更する可能性大（サイトの最小幅）
         minWidth: '1280px',
-    }
+    },
+};
+
+interface IswitchProp {
+    [key: string]: CSSResult | string;
 }
 
-interface IswitchProp{
-    [key:string]: CSSResult|string
-}
-
-export const palette = (name:string, index:number):CSSResult => {
+export const palette = (name: string, index: number): CSSResult => {
     return unsafeCSS(theme.palette[name][index]);
-}
+};
 
-export const font = (name:string):CSSResult => {
+export const font = (name: string): CSSResult => {
     return unsafeCSS(theme.fonts[name]);
-}
+};
 
-export const size = (name:string):CSSResult => {
+export const size = (name: string): CSSResult => {
     return unsafeCSS(theme.sizes[name]);
-}
+};
 
-export const switchProp = (key:string, obj:IswitchProp) => {
+export const switchProp = (key: string, obj: IswitchProp) => {
     return unsafeCSS(obj[key]);
-}
+};
 
-export const withProp = (key:any, func:Function):CSSResult => {
-    return (_.isArray(key) ? unsafeCSS(func(...key)) : unsafeCSS(func(key)));
-}
+export const withProp = (key: any, func: Function): CSSResult => {
+    return _.isArray(key) ? unsafeCSS(func(...key)) : unsafeCSS(func(key));
+};
 
-export const ifProp = (bool:boolean, a:CSSResult, b?:CSSResult):CSSResult|void => {
-    if(bool) {
+export const ifProp = (bool: boolean, a: CSSResult, b?: CSSResult): CSSResult | void => {
+    if (bool) {
         return a;
     }
-    if(b) return b;
-}
+    if (b) return b;
+};
 
 export default theme;
