@@ -55,9 +55,19 @@ const banners = [
     },
 ];
 
+interface Istate {
+    text: string;
+}
+
 class App extends React.Component {
+    public state: Istate = {
+        text: 'テスト',
+    };
+
     public componentDidMount(): void {
         loadjs('http://127.0.0.1:8887/dist/public/bundle.js', '');
+        const {text}: Istate = this.state;
+        console.log(text);
     }
 
     public render(): JSX.Element {
